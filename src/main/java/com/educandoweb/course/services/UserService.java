@@ -1,6 +1,7 @@
 package com.educandoweb.course.services;
 
 import com.educandoweb.course.entities.User;
+import com.educandoweb.course.entities.exceptions.UserNotFoundException;
 import com.educandoweb.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,6 +21,6 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> user = repository.findById(id);
-        return user.get();
+        return user.orElseThrow(() -> new UserNotFoundException("User não encontrado pelo o id: "+ id));
     }
 }

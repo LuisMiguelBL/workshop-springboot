@@ -1,6 +1,7 @@
 package com.educandoweb.course.services;
 
 import com.educandoweb.course.entities.Category;
+import com.educandoweb.course.entities.exceptions.CategoryNotFoundException;
 import com.educandoweb.course.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,8 @@ public class CategoryService {
     }
 
     public Category findById(Long id){
-        Optional<Category> optionalCategory = categoryRepository.findById(id);
-        return optionalCategory.get();
+        //Optional<Category> optionalCategory = categoryRepository.findById(id);
+        return categoryRepository.findById(id).orElseThrow(() ->
+                new CategoryNotFoundException("Categoria não encontrada pelo id:" + id));
     }
 }

@@ -1,6 +1,8 @@
 package com.educandoweb.course.services;
 
 import com.educandoweb.course.entities.Order;
+import com.educandoweb.course.entities.exceptions.CategoryNotFoundException;
+import com.educandoweb.course.entities.exceptions.OrderNotFoundException;
 import com.educandoweb.course.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,8 @@ public class OrderService {
     }
 
     public Order findById(Long id){
-        Optional<Order> optionalOrder = orderRepository.findById(id);
-        return optionalOrder.get();
+        //Optional<Order> optionalOrder = orderRepository.findById(id);
+        return orderRepository.findById(id).orElseThrow(() ->
+                new OrderNotFoundException("Categoria não encontrada pelo id"));
     }
 }
