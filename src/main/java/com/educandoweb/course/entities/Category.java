@@ -1,5 +1,6 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
