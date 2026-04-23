@@ -4,6 +4,7 @@ import com.educandoweb.course.entities.Order;
 import com.educandoweb.course.entities.exceptions.CategoryNotFoundException;
 import com.educandoweb.course.entities.exceptions.OrderNotFoundException;
 import com.educandoweb.course.repositories.OrderRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class OrderService {
     public List<Order> findAll(){
         return orderRepository.findAll();
     }
-
+@Transactional
     public Order findById(Long id){
         //Optional<Order> optionalOrder = orderRepository.findById(id);
         return orderRepository.findById(id).orElseThrow(() ->

@@ -23,4 +23,8 @@ public class UserService {
         Optional<User> user = repository.findById(id);
         return user.orElseThrow(() -> new UserNotFoundException("User não encontrado pelo o id: "+ id));
     }
+
+    public User insert(User user){
+        return repository.save(user);
+    }
 }
