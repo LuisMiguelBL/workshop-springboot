@@ -16,14 +16,15 @@ public class UserExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorEntity> responseEntity
             (UserNotFoundException exception, HttpServletRequest httpServletRequest){
+        HttpStatus status = HttpStatus.NOT_FOUND;
 
         ErrorEntity errorEntity = new ErrorEntity(Instant.now(),
-                HttpStatus.NOT_FOUND.value(),
+                status.value(),
                 "User not found by ID",
                 exception.getMessage(),
                 httpServletRequest.getRequestURI()
                 );
-        return  ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(errorEntity);
+        return  ResponseEntity.status(status).body(errorEntity);
 
     }
 
