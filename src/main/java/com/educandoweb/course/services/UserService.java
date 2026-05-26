@@ -5,6 +5,7 @@ import com.educandoweb.course.entities.exceptions.UserNotFoundException;
 import com.educandoweb.course.repositories.UserRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -43,9 +44,15 @@ public class UserService {
     }
 
     public User update(Long id, User obj){
-        User entity = repository.getReferenceById(id); // utilizado para buscar primeiro e depois vc poder modificar no banco de dados
+        try{
+        User entity = repository.findById(id).orElseThrow(() -> new EntityNotFoundException()); // utilizado para buscar primeiro e depois vc poder modificar no banco de dados
         updateData(entity, obj);
         return repository.save(entity);
+        }
+        catch (RuntimeException e){
+            e.printStackTrace();
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User userOld, User userNew) {
